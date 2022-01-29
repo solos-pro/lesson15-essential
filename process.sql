@@ -109,57 +109,55 @@ SELECT 	animals."index",
 		typeAnimal.type_id 
 FROM animals
 JOIN typeAnimal ON animals.animal_type=typeAnimal.typeAnimal 
----------------------------------------------------------------------------
-
-CREATE TABLE typeAnimal (
-	type_id integer PRIMARY KEY AUTOINCREMENT,
-	typeAnimal varchar (10))
-
-INSERT INTO typeAnimal (typeAnimal) 
-SELECT DISTINCT animal_type FROM animals
-
-drop table animal_type
-
-create table animal_type (
-     animal_id integer,
-     type_id integer,
-     PRIMARY KEY (animal_id),
-     FOREIGN KEY (animal_id)	REFERENCES animals("index"),
-     FOREIGN KEY (type_id) 		REFERENCES typeAnimal(typeAnimal)
-     )
-
-INSERT INTO animal_type (animal_id, type_id)
-SELECT 	animals."index",
-		typeAnimal.type_id 
-FROM animals
-JOIN typeAnimal ON animals.animal_type=typeAnimal.typeAnimal 
-
 
 ---------------------------------------------------------------------------
 
 CREATE TABLE outcomeType (
-	type_id integer PRIMARY KEY AUTOINCREMENT,
-	typeAnimal varchar (10))
+	outcomeType_id integer PRIMARY KEY AUTOINCREMENT,
+	outcomeType varchar (10))
 
-INSERT INTO typeAnimal (typeAnimal) 
-SELECT DISTINCT animal_type FROM animals
+INSERT INTO outcomeType (outcomeType)
+SELECT DISTINCT outcome_type FROM animals
 
-drop table animal_type
+drop table outcomeType
 
-create table animal_type (
+create table animal_outcomeType (
      animal_id integer,
-     type_id integer,
+     outcomeType_id integer,
      PRIMARY KEY (animal_id),
-     FOREIGN KEY (animal_id)	REFERENCES animals("index"),
-     FOREIGN KEY (type_id) 		REFERENCES typeAnimal(typeAnimal)
+     FOREIGN KEY (animal_id)	    REFERENCES animals("index"),
+     FOREIGN KEY (outcomeType_id) 	REFERENCES outcomeType(outcomeType_id)
      )
 
-INSERT INTO animal_type (animal_id, type_id)
+INSERT INTO animal_outcomeType (animal_id, outcomeType_id)
 SELECT 	animals."index",
-		typeAnimal.type_id 
+		outcomeType.outcomeType_id
 FROM animals
-JOIN typeAnimal ON animals.animal_type=typeAnimal.typeAnimal 
+JOIN outcomeType ON animals.outcome_type=outcomeType.outcomeType
 
+---------------------------------------------------------------------------
 
+CREATE TABLE outcomeSubtype (
+	outcomeSubtype_id integer PRIMARY KEY AUTOINCREMENT,
+	outcomeSubtype varchar (10))
+
+INSERT INTO outcomeSubtype (outcomeSubtype)
+SELECT DISTINCT outcome_subtype FROM animals
+
+drop table outcomeSubtype
+
+create table animal_outcomeSubtype (
+     animal_id integer,
+     outcomeSubtype_id integer,
+     PRIMARY KEY (animal_id),
+     FOREIGN KEY (animal_id)	        REFERENCES animals("index"),
+     FOREIGN KEY (outcomeSubtype_id)    REFERENCES outcomeSubtype(outcomeSubtype_id)
+     )
+
+INSERT INTO animal_outcomeSubtype (animal_id, outcomeSubtype_id)
+SELECT 	animals."index",
+		outcomeSubtype.outcomeSubtype_id
+FROM animals
+JOIN outcomeSubtype ON animals.outcome_subtype=outcomeSubtype.outcomeSubtype
 
 
