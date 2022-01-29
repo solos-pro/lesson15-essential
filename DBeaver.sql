@@ -34,6 +34,7 @@ SELECT DISTINCT outcome_subtype FROM animals WHERE outcome_subtype IS NOT NULL
 
 --29421
 SELECT COUNT( (date_of_birth)) FROM animals where date_of_birth IS NOT NULL
+SELECT date_of_birth FROM animals
 
 --29421/ DISTINCT 28209
 SELECT COUNT(DISTINCT (animal_id)) FROM animals where animal_id IS NOT NULL
