@@ -64,10 +64,10 @@ CREATE TABLE animal (
 
 INSERT INTO animal (id, animal_id, name, birthday)
 SELECT "index", animal_id, name, date_of_birth
-FROM short 											--!!!!!!!!!!!!!!!!!!!!!
+FROM animals 											--!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------------------
 
-drop table animal 
+drop table times 
 
 CREATE TABLE times (
     id integer,
@@ -88,10 +88,10 @@ SELECT
     trim(replace(age_upon_outcome,substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1),''))  as ageUnit,
     outcome_month,
     outcome_year
-FROM short 											--!!!!!!!!!!!!!!!!!!!!!
+FROM animals 											--!!!!!!!!!!!!!!!!!!!!!
 
 ---------------------------------------------------------------------------
-select A.id, A.animal_id, A.name, T.age, T.ageUnit, T.outcome_month, T.outcome_year, B.breed, C.color, typeAnimal.typeAnimal
+select A.id, A.animal_id, A.name, T.age, T.ageUnit, T.outcome_month, T.outcome_year, B.breed, C.color, typeAnimal.typeAnimal, outcomeType.outcomeType, outcomeSubtype.outcomeSubtype 
 from animal as A
 LEFT join times as T ON A.id=T.id
 LEFT JOIN animal_breed as AB ON A.id=AB.animal_id
@@ -100,8 +100,12 @@ LEFT JOIN animal_color as AC ON A.animal_id=AC.animal_id
 LEFT JOIN colors as C ON AC.color_id=C.color_id
 LEFT JOIN animal_type as ATy ON A.id=ATy.animal_id
 LEFT JOIN typeAnimal ON ATy.type_id=typeAnimal.type_id 
+LEFT JOIN animal_outcomeType as AOT ON A.id=AOT.animal_id
+LEFT JOIN outcomeType ON AOT.outcomeType_id=outcomeType.outcomeType_id
+LEFT JOIN animal_outcomeSubtype as AOS ON A.id=AOS.animal_id
+LEFT JOIN outcomeSubtype ON AOS.outcomeSubtype_id=outcomeSubtype.outcomeSubtype_id 
 
-select breed from animal_breed ab
+select breed from animal_breed ab 
 ---------------------------------------------------------------------------
 create table fruit (
 	
