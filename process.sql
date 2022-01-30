@@ -91,10 +91,21 @@ SELECT
 FROM short 											--!!!!!!!!!!!!!!!!!!!!!
 
 ---------------------------------------------------------------------------
-select A.id, A.animal_id, A.name, A.birthday, T.age, T.ageUnit, 
+select A.id, A.animal_id, A.name, T.age, T.ageUnit, T.outcome_month, T.outcome_year, B.breed, C.color, typeAnimal.typeAnimal
 from animal as A
 LEFT join times as T ON A.id=T.id
-LEFT JOIN animal_breed as AB ON A.id=AB.id 
+LEFT JOIN animal_breed as AB ON A.id=AB.animal_id
+LEFT JOIN breeds as B ON AB.breed_id=B.breed_id
+LEFT JOIN animal_color as AC ON A.animal_id=AC.animal_id
+LEFT JOIN colors as C ON AC.color_id=C.color_id
+LEFT JOIN animal_type as ATy ON A.id=ATy.animal_id
+LEFT JOIN typeAnimal ON ATy.type_id=typeAnimal.type_id 
+
+select breed from animal_breed ab
+---------------------------------------------------------------------------
+create table fruit (
+	
+	)
 ---------------------------------------------------------------------------
 
 CREATE TABLE typeAnimal (
