@@ -10,8 +10,6 @@ union
 select distinct rtrim(color2) from animals
 where color2 is not null)
 
-DROP TABLE animal_color
-
 create table animal_color (
      animal_id integer,
      color_id integer,
@@ -28,7 +26,6 @@ UNION
 	SELECT 	animals.animal_id, colors.color_id 
 	FROM animals
 	JOIN colors ON rtrim(animals.color2)=colors.color--, rtrim(animals.color2)=colors.color
-
 
 ---------------------------------------------------------------------------
 CREATE TABLE breeds (
@@ -64,10 +61,8 @@ CREATE TABLE animal (
 
 INSERT INTO animal (id, animal_id, name, birthday)
 SELECT "index", animal_id, name, date_of_birth
-FROM animals 											--!!!!!!!!!!!!!!!!!!!!!
+FROM animals
 ---------------------------------------------------------------------------
-
-drop table times 
 
 CREATE TABLE times (
     id integer,
@@ -88,34 +83,8 @@ SELECT
     trim(replace(age_upon_outcome,substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1),''))  as ageUnit,
     outcome_month,
     outcome_year
-FROM animals 											--!!!!!!!!!!!!!!!!!!!!!
+FROM animals
 
----------------------------------------------------------------------------
-select * FROM animal WHERE id = 5
-UNION 
-
-select A.id, A.animal_id, A.name, T.age, T.ageUnit, T.outcome_month, T.outcome_year, B.breed, C.color, typeAnimal.typeAnimal, outcomeType.outcomeType, outcomeSubtype.outcomeSubtype 
-from animal as A 
-inner join times as T ON A.id=T.id
-LEFT JOIN animal_breed as AB ON A.id=AB.animal_id
-LEFT JOIN breeds as B ON AB.breed_id=B.breed_id
-LEFT JOIN animal_color as AC ON A.animal_id=AC.animal_id
-LEFT JOIN colors as C ON AC.color_id=C.color_id
-LEFT JOIN animal_type as ATy ON A.id=ATy.animal_id
-LEFT JOIN typeAnimal ON ATy.type_id=typeAnimal.type_id 
-LEFT JOIN animal_outcomeType as AOT ON A.id=AOT.animal_id
-LEFT JOIN outcomeType ON AOT.outcomeType_id=outcomeType.outcomeType_id
-LEFT JOIN animal_outcomeSubtype as AOS ON A.id=AOS.animal_id
-LEFT JOIN outcomeSubtype ON AOS.outcomeSubtype_id=outcomeSubtype.outcomeSubtype_id 
-WHERE A.id IN (6)
-
-select * from animal
-WHERE animal.id = 5
-
----------------------------------------------------------------------------
-create table fruit (
-	
-	)
 ---------------------------------------------------------------------------
 
 CREATE TABLE typeAnimal (
@@ -124,8 +93,6 @@ CREATE TABLE typeAnimal (
 
 INSERT INTO typeAnimal (typeAnimal) 
 SELECT DISTINCT animal_type FROM animals
-
-drop table typeAnimal
 
 create table animal_type (
      animal_id integer,
@@ -150,8 +117,6 @@ CREATE TABLE outcomeType (
 INSERT INTO outcomeType (outcomeType)
 SELECT DISTINCT outcome_type FROM animals
 
-drop table outcomeType
-
 create table animal_outcomeType (
      animal_id integer,
      outcomeType_id integer,
@@ -175,8 +140,6 @@ CREATE TABLE outcomeSubtype (
 INSERT INTO outcomeSubtype (outcomeSubtype)
 SELECT DISTINCT outcome_subtype FROM animals
 
-drop table outcomeSubtype
-
 create table animal_outcomeSubtype (
      animal_id integer,
      outcomeSubtype_id integer,
@@ -192,5 +155,23 @@ FROM animals
 JOIN outcomeSubtype ON animals.outcome_subtype=outcomeSubtype.outcomeSubtype
 
 ---------------------------------------------------------------------------
+
+select A.id, A.animal_id, A.name, T.age, T.ageUnit, T.outcome_month, T.outcome_year, B.breed, C.color, typeAnimal.typeAnimal, outcomeType.outcomeType, outcomeSubtype.outcomeSubtype
+from animal as A
+inner join times as T ON A.id=T.id
+LEFT JOIN animal_breed as AB ON A.id=AB.animal_id
+LEFT JOIN breeds as B ON AB.breed_id=B.breed_id
+LEFT JOIN animal_color as AC ON A.animal_id=AC.animal_id
+LEFT JOIN colors as C ON AC.color_id=C.color_id
+LEFT JOIN animal_type as ATy ON A.id=ATy.animal_id
+LEFT JOIN typeAnimal ON ATy.type_id=typeAnimal.type_id
+LEFT JOIN animal_outcomeType as AOT ON A.id=AOT.animal_id
+LEFT JOIN outcomeType ON AOT.outcomeType_id=outcomeType.outcomeType_id
+LEFT JOIN animal_outcomeSubtype as AOS ON A.id=AOS.animal_id
+LEFT JOIN outcomeSubtype ON AOS.outcomeSubtype_id=outcomeSubtype.outcomeSubtype_id
+WHERE A.id IN (6)
+
+select * from animal
+WHERE animal.id = 5
 
 
