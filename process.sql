@@ -55,36 +55,46 @@ JOIN breeds ON animals.breed=breeds.breed
 ---------------------------------------------------------------------------
 
 CREATE TABLE animal (
-	id integer PRIMARY KEY AUTOINCREMENT,
+	id integer,
 	animal_id varchar(7),
 	name varchar(30),
-	birthday date
+	birthday date,
+	FOREIGN KEY (id)	REFERENCES animals("index")
 	)
 
-INSERT INTO animal (animal_id, name, birthday)
-SELECT animal_id, name, date_of_birth
+INSERT INTO animal (id, animal_id, name, birthday)
+SELECT "index", animal_id, name, date_of_birth
 FROM short 											--!!!!!!!!!!!!!!!!!!!!!
 ---------------------------------------------------------------------------
 
-drop table times
+drop table animal 
 
 CREATE TABLE times (
-	id integer PRIMARY KEY AUTOINCREMENT,
+    id integer,
 	initial text,--age_upon_outcome
-	num integer,--age_upon_outcome
-	unit varchar (10),--age_upon_outcome
+	age integer,--age_upon_outcome
+	ageUnit varchar (10),--age_upon_outcome
 	outcome_month integer,
-	outcome_year integer
+	outcome_year integer,
+	PRIMARY KEY (id),
+    FOREIGN KEY (id)	REFERENCES animals("index")
 	)
 	
-INSERT INTO times (initial, num, unit, outcome_month, outcome_year)
+INSERT INTO times (id, initial, age, ageUnit, outcome_month, outcome_year)
 SELECT
+	"index" as id,
 	age_upon_outcome as initial,
-	substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1) as num,
-    trim(replace(age_upon_outcome,substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1),''))  as unit,
+	substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1) as age,
+    trim(replace(age_upon_outcome,substr(age_upon_outcome,1, instr(age_upon_outcome,' ')-1),''))  as ageUnit,
     outcome_month,
     outcome_year
 FROM short 											--!!!!!!!!!!!!!!!!!!!!!
+
+---------------------------------------------------------------------------
+select A.id, A.animal_id, A.name, A.birthday, T.age, T.ageUnit, 
+from animal as A
+LEFT join times as T ON A.id=T.id
+LEFT JOIN animal_breed as AB ON A.id=AB.id 
 ---------------------------------------------------------------------------
 
 CREATE TABLE typeAnimal (
@@ -159,5 +169,7 @@ SELECT 	animals."index",
 		outcomeSubtype.outcomeSubtype_id
 FROM animals
 JOIN outcomeSubtype ON animals.outcome_subtype=outcomeSubtype.outcomeSubtype
+
+---------------------------------------------------------------------------
 
 
